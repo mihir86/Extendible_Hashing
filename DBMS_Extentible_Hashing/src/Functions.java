@@ -72,6 +72,7 @@ public class Functions {
                         buckets[probBucket].getElemTwo().setIsFull(false);
                         int prevdepth = buckets[probBucket].getLocalDepth();
                         buckets[probBucket].setLocalDepth(prevdepth+1);
+                        buckets[Test.noofbuckets].setLocalDepth(prevdepth+1);
                         
                         int x=0;
                         for(int i=0;i<100;i++) {
@@ -114,5 +115,20 @@ public class Functions {
                 System.out.println("Local depth of bucket "+i+" : "+bucks[i].getLocalDepth());
             }
         }
-    
+    public static void search(int data,Bucket[] bucks)
+    {
+    	data = data%10;
+    	int check = Test.arr[data];
+            if(bucks[check].getElemOne().getIsFull() && bucks[check].getElemOne().getValue() == data)
+            {
+                System.out.println("Successful search in bucket " + check);
+            }
+            else if(bucks[check].getElemTwo().getIsFull() && bucks[check].getElemTwo().getValue() == data)
+            {
+            	System.out.println("Successful search in bucket " + check);            
+            }
+            else {
+            	System.out.println("Element not present");            
+            }
+    }
 }
