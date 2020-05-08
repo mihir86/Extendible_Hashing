@@ -115,20 +115,24 @@ public class Functions {
                 System.out.println("Local depth of bucket "+i+" : "+bucks[i].getLocalDepth());
             }
         }
-    public static void search(int data,Bucket[] bucks)
+    public static int search(int data,Bucket[] bucks)
     {
-    	data = data%10;
+    	int tmp = data;
+    	data = (data%10)%Test.globalDepth;
     	int check = Test.arr[data];
-            if(bucks[check].getElemOne().getIsFull() && bucks[check].getElemOne().getValue() == data)
+            if(bucks[check].getElemOne().getIsFull() && bucks[check].getElemOne().getValue() == tmp)
             {
                 System.out.println("Successful search in bucket " + check);
+                return 1;
             }
-            else if(bucks[check].getElemTwo().getIsFull() && bucks[check].getElemTwo().getValue() == data)
+            else if(bucks[check].getElemTwo().getIsFull() && bucks[check].getElemTwo().getValue() == tmp)
             {
-            	System.out.println("Successful search in bucket " + check);            
+            	System.out.println("Successful search in bucket " + check);
+            	return 1;            
             }
             else {
-            	System.out.println("Element not present");            
+            	System.out.println("Element not present");
+            	return 0;            
             }
     }
 }

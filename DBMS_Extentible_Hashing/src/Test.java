@@ -22,6 +22,8 @@ public class Test{
 	public static Bucket[] bucks = new Bucket[100];
 	public static int ent=1;
 	public static String txt="";
+	public static int check=-1;
+	public static String lastSearch = "";
 	// we have considered bfr for each bucket = 2
 	// we have considered hash function to be K mod 10
 	
@@ -45,6 +47,12 @@ public class Test{
 			submit.setBounds(62, 57, 108, 40);
 			JButton exit = new JButton("Exit");
 			exit.setBounds(71, 400, 99, 40);
+			JTextField stf = new JTextField(20);
+			stf.setBounds(25, 140, 180, 31);
+			JButton search = new JButton("Search");
+			search.setBounds(62, 200, 105, 40);
+			
+			stf.setText(lastSearch);
 			
 			JLabel keys = new JLabel("KEYS");
 			keys.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -61,6 +69,22 @@ public class Test{
 			JLabel bb = new JLabel("LOCAL DEPTH");
 			bb.setFont(new Font("Dialog", Font.PLAIN, 15));
 			bb.setBounds(124, 13, 106, 16);
+			
+			JLabel answer = new JLabel("");
+			answer.setFont(new Font("Dialog", Font.PLAIN, 15));
+			answer.setBounds(62, 240, 180, 31);
+			
+			if(check==1)
+			{
+				answer.setText("It exists");
+			}
+			else
+			{
+				if(check==0)
+				{
+					answer.setText("It doesn't exist");
+				}
+			}
 			
 			leftPanel.add(keys);
 			leftPanel.add(b);
@@ -137,8 +161,20 @@ public class Test{
 				}
 			});
 			
+			search.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent ae)
+				{
+					check = Functions.search(Integer.parseInt(stf.getText()), bucks);
+					lastSearch=stf.getText();
+					new Test();
+				}
+			});
+			
 			subPanel.add(jtf);
 			subPanel.add(submit);
+			subPanel.add(stf);
+			subPanel.add(search);
+			subPanel.add(answer);
 			subPanel.add(exit);
 			subPanel.setVisible(true);
 			
