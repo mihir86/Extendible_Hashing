@@ -1,6 +1,6 @@
 public class Functions {
     
-    public static Bucket[] addElement(int value, Bucket[] bucks)
+    public static Bucket[] addElement(int value, Bucket[] bucks) throws Exception
         {
     		int maxdepth = (int)Math.pow(2, (int)(Test.globalDepth));
             int position = Test.arr[(value%10) % (maxdepth)];
@@ -20,30 +20,45 @@ public class Functions {
                 }
             else
                 {   
-                     bucks = collisionDetected(bucks, value, position);
+                     try {
+						bucks = collisionDetected(bucks, value, position);
+					} catch (Exception e) {
+						throw new Exception();
+					}
                 }
             
             return bucks;
         }
     
-    public static Bucket[] collisionDetected(Bucket[] buckets, int value, int probBucket)
+    public static Bucket[] collisionDetected(Bucket[] buckets, int value, int probBucket) throws Exception
         {
     		int maxdepth = (int)Math.pow(2, (int)(Test.globalDepth));
     		int position = Test.arr[(value%10) % (maxdepth)];
-        
-            if(buckets[position].getLocalDepth()<Test.globalDepth)
-                {
-                    buckets = splitBucket(buckets, value, probBucket);
-                    System.out.println("Splitting of bucket number: " + probBucket + " happens");
-                }
-            else
-                    {
-                        doubleDirectory(buckets);
-                        System.out.println("Incrementing global depth by one unit");
-                        buckets = addElement(value, buckets);
-                    }
-         
-            return buckets;
+    		
+    		int prevbucket = Test.arr[position];
+
+			int m1 =((buckets[prevbucket].getElemOne().getValue())%10)% (buckets[prevbucket].getLocalDepth()+1);
+			int m2 =((buckets[prevbucket].getElemTwo().getValue())%10)% (buckets[prevbucket].getLocalDepth()+1);
+			int m3 = (value%10)%(buckets[prevbucket].getLocalDepth()+1);
+			
+			if(buckets[prevbucket].isFull() && (m1 == m2 && m2 == m3)) {
+				throw new Exception();
+			}
+			else {
+	            if(buckets[position].getLocalDepth()<Test.globalDepth)
+	                {
+	                    buckets = splitBucket(buckets, value, probBucket);
+	                    System.out.println("Splitting of bucket number: " + probBucket + " happens");
+	                }
+	            else
+	                    {
+	                        doubleDirectory(buckets);
+	                        System.out.println("Incrementing global depth by one unit");
+	                        buckets = addElement(value, buckets);
+	                    }
+	         
+	            	return buckets;
+	        }
         }
     
     public static void doubleDirectory(Bucket[] buckets)
@@ -86,9 +101,21 @@ public class Functions {
                         Test.noofbuckets = Test.noofbuckets + 1;
                         
                         //add elements back into the array
-                        buckets = addElement(temp1a, buckets);
-                        buckets = addElement(temp2a, buckets);
-                        buckets = addElement(value, buckets); 
+                        try {
+							buckets = addElement(temp1a, buckets);
+						} catch (Exception e) {
+							
+						}
+                        try {
+							buckets = addElement(temp2a, buckets);
+						} catch (Exception e) {
+							
+						}
+                        try {
+							buckets = addElement(value, buckets);
+						} catch (Exception e) {
+							
+						} 
         
             return buckets;
         }

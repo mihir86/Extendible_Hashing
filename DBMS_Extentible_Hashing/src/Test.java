@@ -143,14 +143,24 @@ public class Test{
 			submit.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae)
 				{
-					System.out.println("It worked");
-					int temp= Integer.parseInt(jtf.getText());
-					bucks = Functions.addElement(temp, bucks);
-					System.out.println("Entry "+ ent + " : "+temp);
-					Functions.printAllStoredData(globalDepth, bucks);
-					System.out.println("---------------------------");
-					ent++;
-					new Test();
+					try {
+						int temp= Integer.parseInt(jtf.getText());
+						try {
+							bucks = Functions.addElement(temp, bucks);
+							System.out.println("Entry "+ ent + " : "+temp);
+							Functions.printAllStoredData(globalDepth, bucks);
+							System.out.println("---------------------------");
+							ent++;
+							new Test();
+						}
+						catch(Exception e) {
+		            	    JOptionPane.showMessageDialog(frame,"Overflow detected! Please change your hash function");
+						}
+					}
+					catch(Exception e){
+	            	    JOptionPane.showMessageDialog(frame,"Please enter a valid non-negative integer!");
+	            	    return;
+					}
 				}
 			});
 			
@@ -164,9 +174,15 @@ public class Test{
 			search.addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent ae)
 				{
-					check = Functions.search(Integer.parseInt(stf.getText()), bucks);
-					lastSearch=stf.getText();
-					new Test();
+					try {
+						check = Functions.search(Integer.parseInt(stf.getText()), bucks);
+						lastSearch=stf.getText();
+						new Test();
+					}
+					catch(Exception e){
+	            	    JOptionPane.showMessageDialog(frame,"Please enter a valid non-negative integer!");
+	            	    return;
+					}
 				}
 			});
 			
@@ -184,55 +200,17 @@ public class Test{
 			
 			//frame.pack();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			frame.setSize(750,500);
+			//frame.setSize(750,500);
+			frame.setBounds(100, 100, 887, 525);
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
 		}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
         for(int q=0; q<100; q++){bucks[q]=new Bucket();}
         for(int i=0;i<(int)(Math.pow(2,globalDepth));i++) {
         	arr[i]=i;
         }
-/*
-        bucks = Functions.addElement(32, bucks);
-        System.out.println("Entry 1 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(28, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 2 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(43, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 3 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(15, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 4 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(66, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 5 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(27, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 6 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(86, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 7 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        bucks = Functions.addElement(54, bucks);
-        System.out.println("---------------------------------------------");
-        System.out.println("Entry 8 : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        System.out.println("---------------------------------------------");
-        bucks = Functions.addElement(35, bucks);
-        System.out.println("Final hashing scheme : ");
-        Functions.printAllStoredData(globalDepth, bucks);
-        System.out.println("---------------------------------------------");
- */    	
         SwingUtilities.invokeLater(new Runnable() {
         	
         	public void run() {
