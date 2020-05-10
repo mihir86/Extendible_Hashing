@@ -7,7 +7,7 @@ class JFra extends JPanel {
 	public void paintComponent(Graphics g) {
         for(int q=0;q<(int)(Math.pow(2,Test.globalDepth));q++)
 		{
-			g.drawLine(70, 50+30*q, 155, 50+30*Test.arr[q]);	
+			g.drawLine(70, 50+50*q, 195, 50+50*Test.arr[q]);	
 		}
 	}
 	JFra(){
@@ -24,8 +24,9 @@ public class Test{
 	public static String txt="";
 	public static int check=-1;
 	public static String lastSearch = "";
+	public static int hash = 16;
 	// we have considered bfr for each bucket = 2
-	// we have considered hash function to be K mod 10
+	// we have considered hash function to be K mod hash
 	
 		Test()
 		{
@@ -42,15 +43,15 @@ public class Test{
 			subPanel.setLayout(null);
 			
 			JTextField jtf = new JTextField(20);
-			jtf.setBounds(25, 13, 180, 31);
+			jtf.setBounds(62, 32, 180, 31);
 			JButton submit = new JButton("Submit");
-			submit.setBounds(62, 57, 108, 40);
+			submit.setBounds(97, 89, 108, 40);
 			JButton exit = new JButton("Exit");
-			exit.setBounds(71, 400, 99, 40);
+			exit.setBounds(106, 402, 99, 40);
 			JTextField stf = new JTextField(20);
-			stf.setBounds(25, 140, 180, 31);
+			stf.setBounds(62, 175, 180, 31);
 			JButton search = new JButton("Search");
-			search.setBounds(62, 200, 105, 40);
+			search.setBounds(100, 231, 105, 40);
 			
 			stf.setText(lastSearch);
 			
@@ -60,7 +61,7 @@ public class Test{
 			
 			JLabel b = new JLabel("BUCKETS");
 			b.setFont(new Font("Dialog", Font.PLAIN, 15));
-			b.setBounds(133, 13, 85, 16);
+			b.setBounds(168, 13, 85, 16);
 			
 			JLabel bucs = new JLabel("DATA");
 			bucs.setFont(new Font("Dialog", Font.PLAIN, 15));
@@ -68,23 +69,11 @@ public class Test{
 			
 			JLabel bb = new JLabel("LOCAL DEPTH");
 			bb.setFont(new Font("Dialog", Font.PLAIN, 15));
-			bb.setBounds(124, 13, 106, 16);
+			bb.setBounds(159, 13, 106, 16);
 			
 			JLabel answer = new JLabel("");
 			answer.setFont(new Font("Dialog", Font.PLAIN, 15));
-			answer.setBounds(62, 240, 180, 31);
-			
-			if(check==1)
-			{
-				answer.setText("It exists");
-			}
-			else
-			{
-				if(check==0)
-				{
-					answer.setText("It doesn't exist");
-				}
-			}
+			answer.setBounds(25, 295, 267, 31);
 			
 			leftPanel.add(keys);
 			leftPanel.add(b);
@@ -93,12 +82,11 @@ public class Test{
 			leftPanel.setVisible(true);
 			rightPanel.setVisible(true);
 			
-			
 			for(int q=0;q<(int)(Math.pow(2,globalDepth));q++)
 			{
 				JLabel x = new JLabel(String.valueOf(q));
 				x.setFont(new Font("Dialog", Font.PLAIN, 15));
-				x.setBounds(60, 40+30*q, 148, 16);
+				x.setBounds(60, 40+50*q, 148, 16);
 				leftPanel.add(x);
 			}
 			
@@ -106,7 +94,7 @@ public class Test{
 			{
 				JLabel x = new JLabel(String.valueOf(q));
 				x.setFont(new Font("Dialog", Font.PLAIN, 15));
-				x.setBounds(160, 40+30*q, 148, 16);
+				x.setBounds(200, 40+50*q, 148, 16);
 				leftPanel.add(x);
 			}
 			
@@ -114,7 +102,7 @@ public class Test{
 			{
 				JLabel x = new JLabel();
 				x.setFont(new Font("Dialog", Font.PLAIN, 15));
-				x.setBounds(10, 40+30*q, 148, 16);
+				x.setBounds(10, 40+50*q, 148, 16);
 				String txt="";
 					int flag=0;
 					if(bucks[q].getElemOne().getIsFull())
@@ -131,7 +119,7 @@ public class Test{
 						txt=" ";
 					JLabel y = new JLabel(String.valueOf(bucks[q].getLocalDepth()));
 					y.setFont(new Font("Dialog", Font.PLAIN, 15));
-					y.setBounds(180, 40+30*q, 148, 16);
+					y.setBounds(180, 40+50*q, 148, 16);
 					x.setText(txt);
 					rightPanel.add(x);
 					rightPanel.add(y);
@@ -176,8 +164,14 @@ public class Test{
 				{
 					try {
 						check = Functions.search(Integer.parseInt(stf.getText()), bucks);
-						lastSearch=stf.getText();
-						new Test();
+						if(check==-1)
+						{
+		            	    JOptionPane.showMessageDialog(frame,"Element not present");
+						}
+						else
+						{
+		            	    JOptionPane.showMessageDialog(frame,"Successful search in bucket " + check);
+						}
 					}
 					catch(Exception e){
 	            	    JOptionPane.showMessageDialog(frame,"Please enter a valid non-negative integer!");
@@ -198,10 +192,8 @@ public class Test{
 			frame.getContentPane().add(rightPanel, BorderLayout.EAST);
 			frame.getContentPane().add(subPanel);
 			
-			//frame.pack();
 			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			//frame.setSize(750,500);
-			frame.setBounds(100, 100, 887, 525);
+			frame.setBounds(100, 100, 947, 886);
 			frame.setVisible(true);
 			frame.setLocationRelativeTo(null);
 		}

@@ -3,7 +3,7 @@ public class Functions {
     public static Bucket[] addElement(int value, Bucket[] bucks) throws Exception
         {
     		int maxdepth = (int)Math.pow(2, (int)(Test.globalDepth));
-            int position = Test.arr[(value%10) % (maxdepth)];
+            int position = Test.arr[(value% Test.hash) % (maxdepth)];
            
             if(!bucks[position].isFull())
                 {
@@ -33,7 +33,7 @@ public class Functions {
     public static Bucket[] collisionDetected(Bucket[] buckets, int value, int probBucket) throws Exception
         {
     		int maxdepth = (int)Math.pow(2, (int)(Test.globalDepth));
-    		int position = Test.arr[(value%10) % (maxdepth)];
+    		int position = Test.arr[(value% Test.hash) % (maxdepth)];
     		
     		int prevbucket = Test.arr[position];
 
@@ -142,24 +142,27 @@ public class Functions {
                 System.out.println("Local depth of bucket "+i+" : "+bucks[i].getLocalDepth());
             }
         }
+    
     public static int search(int data,Bucket[] bucks)
     {
     	int tmp = data;
-    	data = (data%10)%Test.globalDepth;
-    	int check = Test.arr[data];
+    	int maxdepth = (int)Math.pow(2, (int)(Test.globalDepth));
+        int position = (data% Test.hash) % (maxdepth);
+    	int check = Test.arr[position];
+    	
             if(bucks[check].getElemOne().getIsFull() && bucks[check].getElemOne().getValue() == tmp)
             {
                 System.out.println("Successful search in bucket " + check);
-                return 1;
+                return check;
             }
             else if(bucks[check].getElemTwo().getIsFull() && bucks[check].getElemTwo().getValue() == tmp)
             {
             	System.out.println("Successful search in bucket " + check);
-            	return 1;            
+            	return check;            
             }
             else {
             	System.out.println("Element not present");
-            	return 0;            
+            	return -1;            
             }
     }
 }
