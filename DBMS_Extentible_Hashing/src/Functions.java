@@ -37,9 +37,9 @@ public class Functions {
     		
     		int prevbucket = Test.arr[position];
 
-			int m1 =((buckets[prevbucket].getElemOne().getValue())%10)% (buckets[prevbucket].getLocalDepth()+1);
-			int m2 =((buckets[prevbucket].getElemTwo().getValue())%10)% (buckets[prevbucket].getLocalDepth()+1);
-			int m3 = (value%10)%(buckets[prevbucket].getLocalDepth()+1);
+			int m1 =((buckets[prevbucket].getElemOne().getValue())%Test.hash)% (int)(Math.pow(2, buckets[prevbucket].getLocalDepth()+1));
+			int m2 =((buckets[prevbucket].getElemTwo().getValue())%Test.hash)% (int)(Math.pow(2, buckets[prevbucket].getLocalDepth()+1));
+			int m3 = (value%Test.hash)%(int)(Math.pow(2, buckets[prevbucket].getLocalDepth()+1));
 			
 			if(buckets[prevbucket].isFull() && (m1 == m2 && m2 == m3)) {
 				throw new Exception();

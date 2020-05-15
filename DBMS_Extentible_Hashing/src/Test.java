@@ -16,7 +16,7 @@ class JFra extends JPanel {
 }
 
 public class Test{
-	public static int globalDepth = 2;
+	public static int globalDepth = 1;
 	public static int arr[] = new int[100];
 	public static int noofbuckets = (int)(Math.pow(2,globalDepth));
 	public static Bucket[] bucks = new Bucket[100];
