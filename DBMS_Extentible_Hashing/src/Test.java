@@ -139,6 +139,7 @@ public class Test{
 							Functions.printAllStoredData(globalDepth, bucks);
 							System.out.println("---------------------------");
 							ent++;
+							frame.setVisible(false);
 							new Test();
 						}
 						catch(Exception e) {
