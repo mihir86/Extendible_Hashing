@@ -5,7 +5,7 @@ import java.awt.event.*;
 class JFra extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
-        for(int q=0;q<(int)(Math.pow(2,Test.globalDepth));q++)
+        for(int q=0;q<Integer.min(Test.hash,(int)(Math.pow(2,Test.globalDepth)));q++)
 		{
 			g.drawLine(70, 50+50*q, 195, 50+50*Test.arr[q]);	
 		}
@@ -82,7 +82,7 @@ public class Test{
 			leftPanel.setVisible(true);
 			rightPanel.setVisible(true);
 			
-			for(int q=0;q<(int)(Math.pow(2,globalDepth));q++)
+			for(int q=0;q<Integer.min(Test.hash,(int)(Math.pow(2,globalDepth)));q++)
 			{
 				JLabel x = new JLabel(String.valueOf(q));
 				x.setFont(new Font("Dialog", Font.PLAIN, 15));
