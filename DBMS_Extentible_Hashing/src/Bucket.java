@@ -2,7 +2,7 @@ public class Bucket {
     
     private Elem e1 = new Elem();
     private Elem e2 = new Elem();
-    private int localDepth = Test.globalDepth;
+    private int localDepth = 1;
     
     public Bucket() {}
     

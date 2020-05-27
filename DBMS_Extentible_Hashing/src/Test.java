@@ -16,15 +16,15 @@ class JFra extends JPanel {
 }
 
 public class Test{
-	public static int globalDepth = 1;
+	public static int globalDepth = 0;
 	public static int arr[] = new int[100];
-	public static int noofbuckets = (int)(Math.pow(2,globalDepth));
 	public static Bucket[] bucks = new Bucket[100];
+	public static int noofbuckets = 0;
 	public static int ent=1;
 	public static String txt="";
 	public static int check=-1;
 	public static String lastSearch = "";
-	public static int hash = 16;
+	public static int hash = 5;
 	// we have considered bfr for each bucket = 2
 	// we have considered hash function to be K mod hash
 	
@@ -201,8 +201,14 @@ public class Test{
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
         for(int q=0; q<100; q++){bucks[q]=new Bucket();}
+        Test.noofbuckets=Math.min((int)(Math.pow(2,globalDepth)),(int)(Math.pow(2,bucks[0].getLocalDepth())));
         for(int i=0;i<(int)(Math.pow(2,globalDepth));i++) {
-        	arr[i]=i;
+	        arr[i]=i;
+	        if(Test.globalDepth>bucks[i].getLocalDepth()) {
+	        	if(i>=(int)(Math.pow(2,bucks[i].getLocalDepth()))) {
+	        		arr[i]=arr[i-(int)Math.pow(2,bucks[i].getLocalDepth())];
+	        	}
+	        }
         }
         SwingUtilities.invokeLater(new Runnable() {
         	

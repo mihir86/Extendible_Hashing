@@ -2,6 +2,7 @@ public class Functions {
     
     public static Bucket[] addElement(int value, Bucket[] bucks) throws Exception
         {
+    		
     		int maxdepth = (int)Math.pow(2, (int)(Test.globalDepth));
             int position = Test.arr[(value% Test.hash) % (maxdepth)];
            
@@ -41,7 +42,7 @@ public class Functions {
 			int m2 =((buckets[prevbucket].getElemTwo().getValue())%Test.hash)% (int)(Math.pow(2, buckets[prevbucket].getLocalDepth()+1));
 			int m3 = (value%Test.hash)%(int)(Math.pow(2, buckets[prevbucket].getLocalDepth()+1));
 			
-			if(buckets[prevbucket].isFull() && (m1 == m2 && m2 == m3)) {
+			if((buckets[prevbucket].isFull() && (m1 == m2 && m2 == m3))) {
 				throw new Exception();
 			}
 			else {
@@ -50,12 +51,16 @@ public class Functions {
 	                    buckets = splitBucket(buckets, value, probBucket);
 	                    System.out.println("Splitting of bucket number: " + probBucket + " happens");
 	                }
-	            else
+	            else if(Test.globalDepth<=(int)((Math.log(Test.hash))/Math.log(2)))
 	                    {
 	                        doubleDirectory(buckets);
 	                        System.out.println("Incrementing global depth by one unit");
 	                        buckets = addElement(value, buckets);
 	                    }
+	            else {
+	            	System.out.print((int)((Math.log(Test.hash))/Math.log(2)));
+	            	throw new Exception();
+	            }
 	         
 	            	return buckets;
 	        }
@@ -124,7 +129,7 @@ public class Functions {
     
     public static void printAllStoredData(int globalDepth, Bucket[] bucks)
         {
-            int loopLen = (int) Math.pow(2, globalDepth);               
+            int loopLen = Math.min((int) Math.pow(2, globalDepth),Test.hash);               
                     
             for(int i=0; i<loopLen; i++)
                 {
